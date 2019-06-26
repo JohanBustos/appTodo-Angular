@@ -7,7 +7,7 @@
           <p class="card-text">{{descr}}</p>
           <div class="row">
             <div class="col">
-              <a [routerLink]="['/more']" class="btn btn-primary">Ver más</a>
+              <a [routerLink]="['/more',task]" class="btn btn-primary">Ver más</a>
             </div>
             <div class="col">
               <button class="btn btn-outline-danger" (click)="delete()"> Eliminar</button>

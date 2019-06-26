@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TodoService} from './../services/todo.service'
 
 @Component({
   selector: 'app-home',
@@ -6,43 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  todo = [
-    {
-      "task": "Tarea # 1",
-      "descr": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-    },
-    {
-      "task": "Tarea # 2",
-      "descr": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-    },
-    {
-      "task": "Tarea # 3",
-      "descr": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-    },
-    {
-      "task": "Tarea # 4",
-      "descr": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-    },
-    {
-      "task": "Tarea # 5",
-      "descr": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-    },
-    {
-      "task": "Tarea # 6",
-      "descr": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-    }
-
-  ]
-  constructor() { }
+  todo = []
+  taskEnd: number
+  constructor(private _serviTodo:TodoService) { 
+    this.todo = _serviTodo.getTodo()
+    this.taskEnd = _serviTodo.getCountTask()
+  }
 
   ngOnInit() {
   }
 
   addtask(task:any ,descr:any){
-    this.todo.push(
-      {"task":task.value,
-        "descr":descr.value}
-      )
+    // this.todo.push(
+    //   {"task":task.value,
+    //     "descr":descr.value}
+    //   )
+    this._serviTodo.addTodo(task.value,descr.value)
      task.value="" 
      descr.value=""
     return false
