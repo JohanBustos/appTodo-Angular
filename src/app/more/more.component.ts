@@ -13,7 +13,7 @@ export class MoreComponent implements OnInit {
   
   constructor(private _serviceTodo:TodoService,private rutaActiva: ActivatedRoute,private router: Router) {
     this.idtask = rutaActiva.snapshot.params.task
-    this.task=this._serviceTodo.getOneTodo(this.idtask)["task"]
+    this.task=this._serviceTodo.getOneTodo(this.idtask)["title"]
     this.descr=this._serviceTodo.getOneTodo(this.idtask)["descr"]
    }
 

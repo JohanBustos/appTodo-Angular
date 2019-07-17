@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -6,68 +7,57 @@ import { Injectable } from '@angular/core';
 
 export class TodoService {
   todoend : number = 0
-  todo: {}[] = [
-    {
-      "task": "Tarea # 1",
-      "descr": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-    },
-    {
-      "task": "Tarea # 2",
-      "descr": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-    },
-    {
-      "task": "Tarea # 3",
-      "descr": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-    },
-    {
-      "task": "Tarea # 4",
-      "descr": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-    },
-    {
-      "task": "Tarea # 5",
-      "descr": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-    },
-    {
-      "task": "Tarea # 6",
-      "descr": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s."
-    }
+  base = "http://localhost:3000/"
+  constructor(private http:HttpClient) { }
 
-  ]
-  constructor() { }
-
-  getTodo(){
-    return this.todo
+   getTodo(){
+    //return this.todo
+     return this.http.get('http://localhost:3000/todo')   
+     
   }
 
-  addTodo(task:string,descr:string){
-    this.todo.push(
-      {
-        "task":task,
-        "descr":descr
-      }
-      )
+  addTodo(task:string,descr:string):any{
+    // this.todo.push(
+    //   {
+    //     "task":task,
+    //     "descr":descr
+    //   }
+    //   )
+
+     return this.http.post('http://localhost:3000/todo',{title:task,descr:descr})
+    //  .subscribe((val)=>{
+    //   console.log("Insercion completa");
+    //   return true
+    // },
+    // (error)=>{
+    //   console.log("Error",error);
+    //   return false
+    // })
   }
 
-  deleteTodo(taskToDelete:string){
-    let indexToDelete : number;
-    this.todo.forEach((element,index)=>{
-      if(taskToDelete == element["task"]){
-        indexToDelete = index
-      }
-    })
+  // deleteTodo(taskToDelete:string){
+  //   let indexToDelete : number;
+  //   this.todo.forEach((element,index)=>{
+  //     if(taskToDelete == element["task"]){
+  //       indexToDelete = index
+  //     }
+  //   })
 
-    this.todo.splice(indexToDelete,1)
-  }
+  //   this.todo.splice(indexToDelete,1)
+  // }
 
-  getOneTodo(task:string){
-    let indexToGet : number;
-    this.todo.forEach((element,index)=>{
-      if(task == element["task"]){
-        indexToGet = index
-      }
-    })
-    return this.todo[indexToGet]
-  }
+  // getOneTodo(task:string){
+  //   // let indexToGet : number;
+  //   // this.todo.forEach((element,index)=>{
+  //   //   if(task == element["task"]){
+  //   //     indexToGet = index
+  //   //   }
+  //   // })
+  //   // return this.todo[indexToGet]
+
+  //   this.http.get(``)
+
+  // }
 
   getCountTask(){
     return this.todoend
