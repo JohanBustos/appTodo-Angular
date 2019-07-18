@@ -35,7 +35,7 @@
     <div class="col-md-9">
       <div class="row">
         <div class="col-md-4 mt-3" *ngFor="let todo of todo">
-            <app-cardview [task]="todo.task" [descr]="todo.descr" (data)="deleteTask($event)"></app-cardview>
+            <app-cardview [task]="todo.title" [descr]="todo.descr" (data)="deleteTask($event)"></app-cardview>
         </div>
         
 
