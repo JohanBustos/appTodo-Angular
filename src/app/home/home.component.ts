@@ -7,14 +7,18 @@ import {TodoService} from './../services/todo.service'
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  todo = []
+  todo : any = []
   taskEnd: number
   constructor(private _serviTodo:TodoService) { 
-    this.todo = _serviTodo.getTodo()
     this.taskEnd = _serviTodo.getCountTask()
   }
 
   ngOnInit() {
+    this._serviTodo.getTodo().subscribe(
+      (data)=>{
+        this.todo = data
+      }
+    )
   }
 
   addtask(task:any ,descr:any){
@@ -22,7 +26,22 @@ export class HomeComponent implements OnInit {
     //   {"task":task.value,
     //     "descr":descr.value}
     //   )
-    this._serviTodo.addTodo(task.value,descr.value)
+    let title = task.value
+    let descrip = descr.value
+    this._serviTodo.addTodo(task.value,descr.value).subscribe(
+      (data)=>{
+        console.log("Se inserto la nueva tarea",data);
+     this.todo.push(
+       {"title":title,
+         "descr":descrip}
+       )
+      }
+      ,
+      (err)=>{
+        console.log("Error",err);
+        
+      }
+    )
      task.value="" 
      descr.value=""
     return false

@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class TodoService {
+  base:"http://localhost:3000/"
   todoend : number = 0
   todo: {}[] = [
     {
@@ -33,19 +35,25 @@ export class TodoService {
     }
 
   ]
-  constructor() { }
+  constructor(private http:HttpClient) { }
 
   getTodo(){
-    return this.todo
+    //return this.http.get(this.base+"todo")
+    return this.http.get("http://localhost:3000/todo")
   }
 
   addTodo(task:string,descr:string){
-    this.todo.push(
+    /*this.todo.push(
       {
         "task":task,
         "descr":descr
       }
-      )
+      )*/
+
+      return this.http.post("http://localhost:3000/todo",{
+        "title":task,
+        "descrip":descr
+      })
   }
 
   deleteTodo(taskToDelete:string){
