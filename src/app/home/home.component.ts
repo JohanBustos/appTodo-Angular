@@ -16,24 +16,22 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this._serviTodo.getTodo().subscribe(
       (data)=>{
+        console.log("data",data);
+        
         this.todo = data
       }
     )
   }
 
   addtask(task:any ,descr:any){
-    // this.todo.push(
-    //   {"task":task.value,
-    //     "descr":descr.value}
-    //   )
+ 
     let title = task.value
     let descrip = descr.value
     this._serviTodo.addTodo(task.value,descr.value).subscribe(
       (data)=>{
         console.log("Se inserto la nueva tarea",data);
      this.todo.push(
-       {"title":title,
-         "descr":descrip}
+       data
        )
       }
       ,
@@ -47,14 +45,15 @@ export class HomeComponent implements OnInit {
     return false
   }
 
-  deleteTask(taskToDelete:string){
-    let indexToDelete : number;
-    this.todo.forEach((element,index)=>{
-      if(taskToDelete == element.task){
-        indexToDelete = index
-      }
+  deleteTask(idTaskToDelete:string){
+    console.log("idDelete",idTaskToDelete);
+    
+    let id = idTaskToDelete
+    this._serviTodo.deleteTodo(id).subscribe((result)=>{
+      let indexdelete = this.todo.findIndex(element=> element._id === id)
+      indexdelete>=0 ?  this.todo.splice(indexdelete,1) : false
     })
-    this.todo.splice(indexToDelete,1)
+ 
   }
 
 

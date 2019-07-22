@@ -7,7 +7,7 @@ import { discardPeriodicTasks } from '@angular/core/testing';
   styleUrls: ['./cardview.component.css']
 })
 export class CardviewComponent implements OnInit {
-
+  @Input() idTask:string;
   @Input() task:string;
   @Input() descr:string;
   @Output() data = new EventEmitter();
@@ -20,7 +20,7 @@ export class CardviewComponent implements OnInit {
   }
 
   delete(){
-    let taskToDelete = this.task
+    let taskToDelete = this.idTask
     this.data.emit(taskToDelete)
  
   }
