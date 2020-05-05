@@ -35,6 +35,8 @@ jobs:
         with:
           name: dist
           path: dist
+      - name : 'View Files download'
+        run: ls -l
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v1
         with:
