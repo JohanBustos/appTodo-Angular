@@ -9,25 +9,35 @@ on:
       - master
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@master
-
     - name: Set up Node.js version
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-
     - name: Instalando paquetes
       run: npm install
     - name: Complilando
       run:  npm run build
-        
-    - name: 'Deploy to Azure Web App'
-      uses: azure/webapps-deploy@v1
+    - uses: actions/upload-artifact@v2
       with:
-        app-name: 'react-test-johan'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_28e95826410e4571990280732d17957f }}
-        package: ./dist/appTodo-Angular/
+          name: dist
+          path: dist
+      
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 'Download files compile'
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist
+      - name: 'Deploy to Azure Web App'
+        uses: azure/webapps-deploy@v1
+        with:
+          app-name: 'react-test-johan'
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_28e95826410e4571990280732d17957f }}
+          package: dist/appTodo-Angular/
